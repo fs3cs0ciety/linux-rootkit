@@ -1,6 +1,6 @@
 # RastaMon Linux Rootkit
 
-*Simple POC of a Linux kernel module posing as a rootkit to stealthily hook its syscalls and leave no trace!*
+*Simple POC of a Linux kernel module that utilizes both ftrace and kprobes and poses as a rootkit to stealthily hook its syscalls and leave no trace!*
 
 ## Core Capabilities
 
@@ -227,7 +227,7 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
 ## Extra
 
 > [!Important]  
-> Not responsible for anything done with this. If you're dumb enough to think this is FUD malware, just go away. 😑
+> Not responsible for anything done with this. This does not do anything really malicious honestly and If you're dumb enough to think this is FUD malware, just go away. 😑
 
 ### Resources:
 
