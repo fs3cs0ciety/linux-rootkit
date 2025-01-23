@@ -46,8 +46,20 @@ static int __init rasta_init(void) {
   }
 
   if (IS_ERR(mon_it)) {
-    printk(KERN_ALERT "Failed so hard! just remove me.\n");
+    printk(KERN_ALERT "rasta : Failed so hard! just remove me.\n");
     return PTR_ERR(mon_it);
+  }
+
+  taint_mask_ptr = get_taint_mask_addr();
+  if (!taint_mask_ptr) {
+      printk(KERN_ERR "rasta : Could not get tainted_mask addr.\n");
+      return -EFAULT;
+  }
+
+  clean_thread = kthread_run(my_thread, NULL, RESET_THREAD_NAME);
+  if (IS_ERR(clean_thread)) {
+    printk(KERN_ERR "rasta : Failed to start taint_mask clean_thread.\n");
+    return PTR_ERR(clean_thread);
   }
 
   return 0;
@@ -58,6 +70,10 @@ static void __exit rasta_exit(void) {
 
   if (mon_it) {
     kthread_stop(mon_it);
+  }
+
+  if (clean_thread) {
+    kthread_stop(clean_thread);
   }
 }
 
