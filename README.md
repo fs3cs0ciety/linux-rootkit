@@ -36,9 +36,6 @@ Rasta has the following core capabilities:
 * **Stealthy File System Operations**  
    The `getdents64` hook is also used to hide the presence of Rasta-related files and directories, ensuring that any references to the rootkit remain undetected by filesystem scans.
 
-* **Hide Kernel Module from `/dev/kmsg`**  
-   In addition to hiding `taint` messages, Rasta filters out any mentions of itself from kernel messages, making sure that the rootkit's activities do not show up in kernel logs that could alert an admin to its presence.
-
 * **Hiding Module Presence in `lsmod` and Other Kernel Listings**  
    Rasta's stealth extends to hiding itself from `lsmod` and other kernel module listings, ensuring that the rootkit isn't visible in the list of loaded kernel modules.
 
