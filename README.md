@@ -50,7 +50,7 @@ Rasta has the following core capabilities:
 
 <p align="center"><img src=".img/taint_mask.jpg"></p>
 
-* This demonstrates how Rasta manipulates the kernel's taint mask, effectively resetting it to 0 and hiding the taint messages that would normally indicate kernel module loading issues.
+* This demonstrates how Rasta manipulates the kernel's taint mask, effectively resetting it to 0.
 
 ---
 
