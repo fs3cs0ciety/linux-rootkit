@@ -39,9 +39,6 @@ Rasta has the following core capabilities:
 * **Hiding Module Presence in `lsmod` and Other Kernel Listings**  
    Rasta's stealth extends to hiding itself from `lsmod` and other kernel module listings, ensuring that the rootkit isn't visible in the list of loaded kernel modules.
 
-* **Bypass Security Detection Tools**  
-   All of these capabilities work together to make it extremely difficult for security detection tools and administrators to identify or remove Rasta. The rootkit operates entirely in memory, leaving minimal traces and ensuring that it remains undetected.
-
 ---
 
 ## Examples
