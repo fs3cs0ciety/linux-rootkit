@@ -128,7 +128,7 @@ Rasta has the following core capabilities:
 
 ---
 
-### Using `notrace` example
+### Using `notrace` example to avoid `/sys/kernel/tracing/available_filter_functions` with our read hook
 
 ```c
 // Hooked function that intercepts the syscall read
