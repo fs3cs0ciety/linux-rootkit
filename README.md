@@ -10,4 +10,10 @@ Rasta has the following capablities below :
  * Hides `taint` message from `dmesg` or `/dev/kmsg`.
  * Hides from `/sys/module` without deleting the module from the directory. More explained on this below, followed by examples.
  * `hooked_read` will filter out all lines with the word `rasta` for example because this is the modules name that we want to hide.
-  * ^ Hides all modules functions from `/sys/kernel/tracing/touched_functions`, `/proc/kallsyms`, and also  
+   * ^ Hides all the modules functions from `/sys/kernel/tracing/touched_functions` and `/proc/kallsyms`.
+ *  
+
+
+## Examples :
+
+<p align="center"><img src=".img/taint_mask.jpg"></p>
