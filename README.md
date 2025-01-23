@@ -230,7 +230,7 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
 > Not responsible for anything done with this. This does not do anything really malicious honestly and If you're dumb enough to think this is FUD malware, just go away. 😑
 
 ### Resources:
-
+* [Detect-Rootkit-Cheatsheet](https://github.com/MatheuZSecurity/detect-lkm-rootkit-cheatsheet)
 * [Rootkit by matheuZSecurity](https://github.com/matheuZSecurity/Rootkit)
 * [Linux Rootkit Series by fs3cs0ciety](https://github.com/fs3cs0ciety/Linux-Rootkit-Series)
 * [Xcellerator's blog](https://xcellerator.github.io/)
