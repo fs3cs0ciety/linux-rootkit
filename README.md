@@ -4,16 +4,48 @@
 
 ## Core Capabilities
 
-Rasta has the following capabilities:
+Rasta has the following core capabilities:
 
-* Hide every file/directory with the name `rasta` from userspace with a `getdents64` hook.
-* Remove/Add the module from the `/proc/modules` list.
-* Gain root capabilities by using the `hooked_kill` syscall and setting all IDs to 0.
-* Hide `taint` message from `dmesg` or `/dev/kmsg`.
-* Hide from `/sys/module` without deleting the module from the directory (explained below, with examples).
-* `hooked_read` will filter out all lines with the word `rasta` (the module name we want to hide).
-   * Hides all the module's functions from `/sys/kernel/tracing/touched_functions` and `/proc/kallsyms`.
+* **Hide Files and Directories Named `rasta`**  
+   Rasta uses the `getdents64` syscall hook to hide all files and directories named `rasta` from userspace. This is particularly useful for obfuscating the presence of the module in the filesystem.
+  
+* **Remove/Add Module from `/proc/modules` List**  
+   The module can remove itself from the `/proc/modules` list, making it difficult for userspace tools like `lsmod` to detect its presence. It can also add itself back into the list when necessary.
 
+* **Gain Root Capabilities**  
+   By hooking the `hooked_kill` syscall, Rasta can set all process IDs (UIDs, GIDs, etc.) to 0, giving the module root privileges. This enables full control over the system without being detected.
+
+* **Hide `taint` Messages from `dmesg` or `/dev/kmsg`**  
+   Rasta hides any kernel `taint` messages that would typically show up in `dmesg` or `/dev/kmsg`. This helps to cover up any traces of kernel modifications, making the rootkit harder to detect.
+
+* **Hide from `/sys/module` Directory**  
+   The module hides itself from the `/sys/module` directory, preventing any attempts to manually detect or unload the module. This is achieved by manipulating the syscalls without actually deleting the module directory, making it invisible while still active.
+
+* **Filter Module's Functions from `/sys/kernel/tracing/touched_functions` and `/proc/kallsyms`**  
+   Rasta hooks `hooked_read` to filter out its own functions from being listed in `/sys/kernel/tracing/touched_functions` and `/proc/kallsyms`. This ensures that Rasta’s presence and behavior remain hidden in the kernel's symbol table and tracing logs.
+
+* **Hiding Processes by PID**  
+   Rasta hooks into the `getdents64` syscall to hide processes' PIDs, making it difficult for any monitoring tools to identify running processes associated with Rasta. This feature is still under development, but the goal is to ensure processes related to the rootkit remain stealthy.
+
+* **Hiding Network Connections on Port 8081**  
+   Rasta hooks two critical TCP APIs—`tcp4_seq_show` and `tcp6_seq_show`—using **ftrace** to hide any network connections on port 8081. This prevents tools like `netstat`, `lsof` and `ss` from displaying active connections on this port, ensuring covert communication for purposes like reverse shells.
+   
+* **Reverse Shell**  
+   Rasta features a basic reverse shell that listens on a specified IP address (defaults to `localhost`). This shell can be configured to connect to an external IP address, providing a remote shell that remains hidden by the network connection.
+
+* **Stealthy File System Operations**  
+   The `getdents64` hook is also used to hide the presence of Rasta-related files and directories, ensuring that any references to the rootkit remain undetected by filesystem scans.
+
+* **Hide Kernel Module from `/dev/kmsg`**  
+   In addition to hiding `taint` messages, Rasta filters out any mentions of itself from kernel messages, making sure that the rootkit's activities do not show up in kernel logs that could alert an admin to its presence.
+
+* **Hiding Module Presence in `lsmod` and Other Kernel Listings**  
+   Rasta's stealth extends to hiding itself from `lsmod` and other kernel module listings, ensuring that the rootkit isn't visible in the list of loaded kernel modules.
+
+* **Bypass Security Detection Tools**  
+   All of these capabilities work together to make it extremely difficult for security detection tools and administrators to identify or remove Rasta. The rootkit operates entirely in memory, leaving minimal traces and ensuring that it remains undetected.
+
+---
 
 ## Examples
 
