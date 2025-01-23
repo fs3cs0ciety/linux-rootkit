@@ -13,7 +13,7 @@ Rasta has the following core capabilities:
    The module can remove itself from the `/proc/modules` list, making it difficult for userspace tools like `lsmod` to detect its presence. It can also add itself back into the list when necessary.
 
 * **Gain Root Capabilities**  
-   By hooking the `hooked_kill` syscall, Rasta can set all process IDs (UIDs, GIDs, etc.) to 0, giving the module root privileges. This enables full control over the system without being detected.
+   By hooking the `hooked_kill` syscall, Rasta can set all process IDs (UIDs, GIDs, etc.) to 0, giving the module root privileges. This enables full control over the system.
 
 * **Hide `taint` Messages from `dmesg` or `/dev/kmsg`**  
    Rasta hides any kernel `taint` messages that would typically show up in `dmesg` or `/dev/kmsg`. This helps to cover up any traces of kernel modifications, making the rootkit harder to detect.
