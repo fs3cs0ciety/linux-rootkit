@@ -13,7 +13,7 @@ Rasta has the following capabilities:
 * Hide from `/sys/module` without deleting the module from the directory (explained below, with examples).
 * `hooked_read` will filter out all lines with the word `rasta` (the module name we want to hide).
    * Hides all the module's functions from `/sys/kernel/tracing/touched_functions` and `/proc/kallsyms`.
-* [Any additional capabilities or features you might want to add.]
+
 
 ## Examples
 
