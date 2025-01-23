@@ -38,6 +38,9 @@ Rasta has the following core capabilities:
 
 * **Hiding Module Presence in `lsmod` and Other Kernel Listings**  
    Rasta's stealth extends to hiding itself from `lsmod` and other kernel module listings, ensuring that the rootkit isn't visible in the list of loaded kernel modules.
+---
+
+* Quick shout to some [sources](#resources).   
 
 ---
 
@@ -228,8 +231,8 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
 
 ### Resources:
 
-* [Linux Rootkit Series by fs3cs0ciety](https://github.com/fs3cs0ciety/Linux-Rootkit-Series)
 * [Rootkit by matheuZSecurity](https://github.com/matheuZSecurity/Rootkit)
+* [Linux Rootkit Series by fs3cs0ciety](https://github.com/fs3cs0ciety/Linux-Rootkit-Series)
 * [Xcellerator's blog](https://xcellerator.github.io/)
 * [The Linux Kernel Source](https://github.com/torvalds/linux)
 
