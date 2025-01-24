@@ -224,6 +224,10 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
 }
 ```
 
+### Protecting Ftrace From Being Disabled and Spoofing the read to always return a zero when on. Basically Masking Ftrace Being Enabled.
+
+<p align="center"><img src=".img/ftrace.jpg"></p>
+
 ## Extra
 
 > [!Important]  

