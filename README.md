@@ -1,4 +1,5 @@
 # RastaMon Linux Rootkit
+🇯🇲
 
 *Simple POC of a Linux kernel module for latest kernel version that utilizes both ftrace and kprobes and poses as a rootkit to stealthily hook its syscalls and leave no trace!*
 
