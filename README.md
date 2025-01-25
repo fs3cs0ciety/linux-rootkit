@@ -18,7 +18,7 @@ Rasta has the following core capabilities:
 * **Hide `taint` Messages from `dmesg` or `/dev/kmsg`**  
    Rasta hides any kernel `taint` messages that would typically show up in `dmesg` or `/dev/kmsg`. This helps to cover up any traces of kernel modifications, making the rootkit harder to detect.
 
-* **Hide from `/sys/module` Directory**  
+* **Hide from `/sys/module/` Directory**  
    The module hides itself from the `/sys/module` directory, preventing any attempts to manually detect or unload the module. This is achieved by manipulating the syscalls without actually deleting the module directory, making it invisible while still active.
 
 * **Filter Module's Functions from `/sys/kernel/tracing/touched_functions` and `/proc/kallsyms`**  
@@ -33,11 +33,6 @@ Rasta has the following core capabilities:
 * **Reverse Shell**  
    Rasta features a basic reverse shell that listens on a specified IP address (defaults to `localhost`). This shell can be configured to connect to an external IP address, providing a remote shell that remains hidden by the network connection.
 
-* **Stealthy File System Operations**  
-   The `getdents64` hook is also used to hide the presence of Rasta-related files and directories, ensuring that any references to the rootkit remain undetected by filesystem scans.
-
-* **Hiding Module Presence in `lsmod` and Other Kernel Listings**  
-   Rasta's stealth extends to hiding itself from `lsmod` and other kernel module listings, ensuring that the rootkit isn't visible in the list of loaded kernel modules.
 ---
 
 * Quick shout to some [sources](#resources).   
