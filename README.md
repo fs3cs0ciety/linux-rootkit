@@ -224,6 +224,12 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
 
 <p align="center"><img src=".img/ftrace.jpg"></p>
 
+---
+
+![screenshot_26012025_115157](https://github.com/user-attachments/assets/6c02f290-0c65-493e-bacf-33840ad93b18)
+
+* nice right! but still very vulnerable to a simple `journalctl -k | grep taint` command.
+
 ## Extra
 
 > [!Important]  
