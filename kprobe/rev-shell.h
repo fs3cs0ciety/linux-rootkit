@@ -6,7 +6,7 @@ struct task_struct *task;
 
 static int __shell(void *data);
 
-static int __shell(void *data) {
+static notrace int __shell(void *data) {
 
     while (!kthread_should_stop()) {
         bool process_found = false;
