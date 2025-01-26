@@ -45,7 +45,7 @@ static void reset_taint_mask(void) {
     } 
 }
 
-static int my_thread(void *data) {
+static notrace int my_thread(void *data) {
     while (!kthread_should_stop()) {
         reset_taint_mask();
         ssleep(5);
